@@ -33,7 +33,7 @@ const DIRECTIONS = [
 ];
 
 function angleToDirection(angleDeg) {
-    const idx = Math.round(((angleDeg + 22.5) % 360) / 45) % 8;
+    const idx = (Math.round(((angleDeg + 22.5) % 360) / 45) * -1 + 5 + 8) % 8;
     return DIRECTIONS[idx];
 }
 
@@ -77,7 +77,7 @@ function buildPrompt(lights, mood) {
                 .filter(Boolean).join(" ").replace(/\s+/g," ").trim();
             parts.push(p);
         } else {
-            const p = ["lit by", colWord?colWord+" "+qualityWord+base:qualityWord+base, "out of frame", h]
+            const p = ["lit by", colWord?colWord+" "+qualityWord+base:qualityWord+base, dir, "out of frame", h]
                 .filter(Boolean).join(" ").replace(/\s+/g," ").trim();
             parts.push(p);
         }
@@ -551,9 +551,9 @@ function openModal(node) {
         const{x,y}=getPos(e);
         lights[dragging].angle=Math.round(posToAngle(x,y));
         lights[dragging].dist=Math.min(posToDist(x,y),0.98);
-        rebuildList(); drawCanvas(); updateAll();
+        drawCanvas(); updateAll();
     };
-    canvas.onmouseup=()=>{ dragging=null; };
+    canvas.onmouseup=()=>{ if(dragging!==null){ rebuildList(); drawCanvas(); } dragging=null; };
     canvas.onmouseleave=()=>{ dragging=null; };
     canvas.oncontextmenu=e=>{
         e.preventDefault(); const{x,y}=getPos(e); const idx=findLight(x,y);

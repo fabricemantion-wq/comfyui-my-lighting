@@ -2,7 +2,7 @@
 
 A custom node for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) that lets you visually set up a lighting scene and automatically generate a detailed prompt string describing it.
 
-
+![comfyui-my-lighting](assets/lighting_01.png)
 ---
 ![comfyui-my-lighting](assets/lighting_02.png)
 ---
